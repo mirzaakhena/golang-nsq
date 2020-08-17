@@ -8,21 +8,16 @@ import (
 
 func main() {
 
-	cs := []messagebroker.ConsumerHandler{
-		{
-			Channel: "1",
-			Topic:   "Test",
-			FunctionHandler: func(message []byte) error {
-				fmt.Printf("1>>> %v\n", string(message))
-				return nil
-			},
-		},
-	}
+	c := messagebroker.NewConsumer("localhost:4150")
 
-	exit := make(chan int)
+	c.Handle("onOrderCreated", "channel1", func(message []byte) {
+		fmt.Printf("onOrderCreated >> %v\n", string(message))
+	})
 
-	messagebroker.RunConsumer("localhost:4150", cs)
+	c.Handle("onOrderCancelled", "channel1", func(message []byte) {
+		fmt.Printf("onOrderCancelled >> %v\n", string(message))
+	})
 
-	<-exit
+	c.StartListening(true)
 
 }

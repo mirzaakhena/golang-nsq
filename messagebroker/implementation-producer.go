@@ -2,12 +2,12 @@ package messagebroker
 
 import "github.com/nsqio/go-nsq"
 
-// producer is
-type producer struct {
+// producerImpl is
+type producerImpl struct {
 	defaultProducer *nsq.Producer
 }
 
-func nsqProducerInit(url string) *nsq.Producer {
+func producerImplInit(url string) *nsq.Producer {
 	nsqConfig := nsq.NewConfig()
 	nsqProducer, err := nsq.NewProducer(url, nsqConfig)
 	if err != nil {
@@ -16,6 +16,6 @@ func nsqProducerInit(url string) *nsq.Producer {
 	return nsqProducer
 }
 
-func (x *producer) Publish(topic string, body []byte) error {
-	return x.defaultProducer.Publish(topic, body)
+func (p *producerImpl) Publish(topic string, body []byte) error {
+	return p.defaultProducer.Publish(topic, body)
 }

@@ -1,13 +1,14 @@
 package messagebroker
 
 // NewProducer is
-func NewProducer(url string) Publisher {
-	return &producer{
-		defaultProducer: nsqProducerInit(url),
+func NewProducer(url string) Producer {
+	return &producerImpl{
+		defaultProducer: producerImplInit(url),
 	}
 }
 
-// RunConsumer is
-func RunConsumer(url string, consumers []ConsumerHandler) {
-	nsqConsumerInit(url, consumers)
+func NewConsumer(url string) Consumer {
+	return &consumerImpl{
+		url: url,
+	}
 }
