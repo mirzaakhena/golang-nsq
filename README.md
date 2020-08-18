@@ -24,6 +24,8 @@ $ go run main.go
 Producer will publish message the message with topic `onOrderCreated`. Try to change the topic into `onOrderCancelled` and run the producer again.
 
 ## What is the channel and how do we use it?
+Channel is a consumer grouping. The consumer with the same channel name will only consume the event once.
+
 If you have more than one consumer with the SAME TOPIC and SAME CHANNEL then ONLY ONE consumer will consume the event. You can use this scenario if you have more than one cloned consumer instance.
 
 If you have more than one consumer with the SAME TOPIC and DIFFERENT CHANNEL then ALL the consumer will consume the event. This scenario is suitable if you have more than consumer that have different purpose but need to listen the same topic.
