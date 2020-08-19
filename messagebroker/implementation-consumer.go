@@ -17,15 +17,13 @@ func (c *consumerImpl) StartListening(blocking bool) {
 
 	nsqConfig := nsq.NewConfig()
 
-	var consumers []*nsq.Consumer
 	for _, ch := range c.consumerHandlers {
 
 		consumer, err := nsq.NewConsumer(ch.Topic, ch.Channel, nsqConfig)
 		if err != nil {
 			panic(err.Error())
 		}
-
-		consumers = append(consumers, consumer)
+		defer consumer.Stop()
 
 		consumer.AddHandler(&internalConsumer{handler: ch.FunctionHandler})
 
@@ -39,10 +37,6 @@ func (c *consumerImpl) StartListening(blocking bool) {
 		sigChan := make(chan os.Signal, 1)
 		signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
 		<-sigChan
-
-		for _, cns := range consumers {
-			cns.Stop()
-		}
 	}
 
 }
