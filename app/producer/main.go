@@ -1,6 +1,6 @@
 package main
 
-import "github.com/mirzaakhena/belajar-nsq/messagebroker"
+import "github.com/mirzaakhena/golang-nsq/messagebroker"
 
 func main() {
 	p := messagebroker.NewProducer("localhost:4150")
