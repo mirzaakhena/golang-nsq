@@ -17,5 +17,5 @@ type ConsumerHandler struct {
 
 type Consumer interface {
 	Handle(topic, channel string, funcHandler FunctionHandler)
-	StartListening(blocking bool)
+	StartListening()
 }

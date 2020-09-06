@@ -1,10 +1,6 @@
 package messagebroker
 
 import (
-	"os"
-	"os/signal"
-	"syscall"
-
 	"github.com/nsqio/go-nsq"
 )
 
@@ -13,7 +9,7 @@ type consumerImpl struct {
 	consumerHandlers []ConsumerHandler
 }
 
-func (c *consumerImpl) StartListening(blocking bool) {
+func (c *consumerImpl) StartListening() {
 
 	nsqConfig := nsq.NewConfig()
 
@@ -33,11 +29,11 @@ func (c *consumerImpl) StartListening(blocking bool) {
 
 	}
 
-	if blocking {
-		sigChan := make(chan os.Signal, 1)
-		signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
-		<-sigChan
-	}
+	// if blocking {
+	// 	sigChan := make(chan os.Signal, 1)
+	// 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	// 	<-sigChan
+	// }
 
 }
 
